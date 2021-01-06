@@ -6,6 +6,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 {
     [SerializeField]
     private float moveSpeed = 2.5f;
+    [SerializeField]
     private float maxSpeed = 2;
     private Rigidbody2D rb2d;
     void Start()
@@ -23,7 +24,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
     {
         Vector2 move = new Vector2(direction, 0);
         //transform.position += move * Time.deltaTime * moveSpeed;
-        if (rb2d.velocity.x < maxSpeed) {
+        if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed) {
             rb2d.AddForce(move);
         }
     }

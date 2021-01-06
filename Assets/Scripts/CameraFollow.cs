@@ -8,13 +8,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float smoothing;
     [SerializeField] private Vector3 offset;
 
-
-
     void FixedUpdate()
     {
-        Vector3 desiredLocation = target.position + offset;
+        Vector3 desiredLocation = target.position;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredLocation, smoothing);
-        transform.position = smoothedPosition;
-        transform.LookAt(target);
+        transform.position = smoothedPosition + offset;
     }
 }
