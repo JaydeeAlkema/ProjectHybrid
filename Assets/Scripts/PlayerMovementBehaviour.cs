@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerMovementBehaviour : MonoBehaviour
 {
 	[SerializeField]
-	private float moveSpeed = 2.5f;
+	private Vector2 moveSpeed = new Vector2(2.5f,0);
 	[SerializeField]
 	private float maxSpeed = 2;
 	private Rigidbody2D rb2d;
+
+	private bool walkingLeft = false;
+	private bool walkingRight = false;
+
 	void Start()
 	{
 		rb2d = GetComponent<Rigidbody2D>();
@@ -17,7 +21,21 @@ public class PlayerMovementBehaviour : MonoBehaviour
 	void Update()
 	{
 		float horizontal = Input.GetAxis("Horizontal");
-		MovePlayer(horizontal);
+        //MovePlayer(horizontal);
+        if (walkingLeft)
+        {
+			if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
+			{
+				rb2d.AddForce(-moveSpeed);
+			}
+		}
+		if (walkingRight)
+        {
+			if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
+			{
+				rb2d.AddForce(moveSpeed);
+			}
+		}
 	}
 
 	public void MovePlayer(float direction)
@@ -29,4 +47,22 @@ public class PlayerMovementBehaviour : MonoBehaviour
 			rb2d.AddForce(move);
 		}
 	}
+
+	public void EnableWalkLeft()
+    {
+		walkingLeft = true;
+    }
+	public void DisableWalkLeft()
+    {
+		walkingLeft = false;
+    }
+	public void EnableWalkRight()
+    {
+		walkingRight = true;
+    }
+	public void DisableWalkRight()
+    {
+		walkingRight = false;
+    }
+
 }

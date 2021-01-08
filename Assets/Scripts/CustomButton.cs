@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class CustomButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CustomButton : MonoBehaviour ,IPointerDownHandler, IPointerUpHandler
 {
     public UnityEvent OnHeld;
     bool isHeld = false;
