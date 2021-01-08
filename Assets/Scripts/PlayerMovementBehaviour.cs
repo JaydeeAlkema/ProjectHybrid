@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerMovementBehaviour : MonoBehaviour
 {
 	[SerializeField]
-	private Vector2 moveSpeed = new Vector2(2.5f,0);
+	private Vector2 moveSpeed = new Vector2(2.5f, 0);
 	[SerializeField]
 	private float maxSpeed = 2;
 	private Rigidbody2D rb2d;
-
-	private bool walkingLeft = false;
-	private bool walkingRight = false;
 
 	void Start()
 	{
@@ -20,22 +18,23 @@ public class PlayerMovementBehaviour : MonoBehaviour
 
 	void Update()
 	{
-		float horizontal = Input.GetAxis("Horizontal");
-        //MovePlayer(horizontal);
-        if (walkingLeft)
-        {
-			if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
-			{
-				rb2d.AddForce(-moveSpeed);
-			}
-		}
-		if (walkingRight)
-        {
-			if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
-			{
-				rb2d.AddForce(moveSpeed);
-			}
-		}
+		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * moveSpeed.x;
+		rb2d.velocity = new Vector2(horizontal, 0f);
+		//      //MovePlayer(horizontal);
+		//      if (walkingLeft)
+		//      {
+		//	if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
+		//	{
+		//		rb2d.AddForce(-moveSpeed);
+		//	}
+		//}
+		//if (walkingRight)
+		//      {
+		//	if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
+		//	{
+		//		rb2d.AddForce(moveSpeed);
+		//	}
+		//}
 	}
 
 	public void MovePlayer(float direction)
@@ -47,22 +46,4 @@ public class PlayerMovementBehaviour : MonoBehaviour
 			rb2d.AddForce(move);
 		}
 	}
-
-	public void EnableWalkLeft()
-    {
-		walkingLeft = true;
-    }
-	public void DisableWalkLeft()
-    {
-		walkingLeft = false;
-    }
-	public void EnableWalkRight()
-    {
-		walkingRight = true;
-    }
-	public void DisableWalkRight()
-    {
-		walkingRight = false;
-    }
-
 }
