@@ -20,21 +20,7 @@ public class PlayerMovementBehaviour : MonoBehaviour
 	{
 		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal") * moveSpeed.x;
 		rb2d.velocity = new Vector2(horizontal, 0f);
-		//      //MovePlayer(horizontal);
-		//      if (walkingLeft)
-		//      {
-		//	if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
-		//	{
-		//		rb2d.AddForce(-moveSpeed);
-		//	}
-		//}
-		//if (walkingRight)
-		//      {
-		//	if (rb2d.velocity.x < maxSpeed && rb2d.velocity.x > -maxSpeed)
-		//	{
-		//		rb2d.AddForce(moveSpeed);
-		//	}
-		//}
+
 	}
 
 	public void MovePlayer(float direction)
