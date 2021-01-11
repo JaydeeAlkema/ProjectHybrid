@@ -7,7 +7,7 @@ using UnityEngine;
 /// It will listen to the microphone on the mobile device for a few seconds and then analyze it.
 /// If the required amount of dB is not achieved, it will record another segment to analyze.
 /// 
-/// https://stackoverflow.com/questions/53030560/read-microphone-decibels-and-pitch-frequency
+/// Based on a tutorial posted here: https://github.com/bryanrtboy/InputTutorial
 /// </summary>
 public class MicInput : MonoBehaviour
 {
