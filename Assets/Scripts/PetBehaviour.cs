@@ -24,6 +24,7 @@ public class PetBehaviour : MonoBehaviour
     [SerializeField] private Vector2Int timeBetweenIdleActions = new Vector2Int(500,1000);
     [SerializeField] private int timer = 300;
     private Rigidbody2D rb2d;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -43,6 +44,7 @@ public class PetBehaviour : MonoBehaviour
             {
                 if (rb2d.velocity.x < petMaxSpeed && rb2d.velocity.x > -petMaxSpeed)
                 {
+                    transform.localScale = new Vector3(-1,1,1);
                     rb2d.AddForce(new Vector2(-petMovementSpeed, 0));
                 }
             }
@@ -50,6 +52,7 @@ public class PetBehaviour : MonoBehaviour
             {
                 if (rb2d.velocity.x < petMaxSpeed && rb2d.velocity.x > -petMaxSpeed)
                 {
+                    transform.localScale = new Vector3(1,1,1);
                     rb2d.AddForce(new Vector2(petMovementSpeed, 0));
                 }
             }
