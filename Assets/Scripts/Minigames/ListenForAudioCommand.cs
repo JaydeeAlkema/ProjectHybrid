@@ -9,11 +9,15 @@ using UnityEngine;
 /// </summary>
 public class ListenForAudioCommand : MonoBehaviour
 {
+	[SerializeField] private bool debug = false;
+
 	void Update()
 	{
 		float db = MicInput.MicLoudnessinDecibels;
-
-		Debug.Log("Volume is " + MicInput.MicLoudness.ToString("##.#####") + ", decibels is :" + MicInput.MicLoudnessinDecibels.ToString("######"));
+		if(debug)
+		{
+			Debug.Log("Volume is " + MicInput.MicLoudness.ToString("##.#####") + ", decibels is :" + MicInput.MicLoudnessinDecibels.ToString("######"));
+		}
 	}
 
 	float NormalizedLinearValue(float v)
