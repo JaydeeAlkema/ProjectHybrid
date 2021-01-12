@@ -5,7 +5,6 @@ using UnityEngine;
 public class MinigameBehaviour_Fire : MonoBehaviour
 {
 	[SerializeField] private bool isActive = false;
-	[SerializeField] private Transform fireSpritesParent = default;
 	[SerializeField] private MicInput micInput = default;
 	[SerializeField] private float micDB = 0;
 
@@ -15,14 +14,14 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 	{
 		micInput.enabled = false;
 
-		for(int i = 0; i < fireSpritesParent.childCount; i++)
-		{
-			fireSprites.Add(fireSpritesParent.GetChild(i).gameObject);
-		}
-
+		ToggleFireSprites(false);
 		StartCoroutine(InitMinigame());
 	}
 
+	/// <summary>
+	/// Initializes the minigame, which is making sure the mic input is on before checking the volume(dB).
+	/// </summary>
+	/// <returns></returns>
 	private IEnumerator InitMinigame()
 	{
 		while(true)
@@ -39,7 +38,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 
 				if(micDB > -30f)
 				{
-					StartCoroutine(ToggleFireSprites(false));
+					StartCoroutine(FireSpritesExtinguishEvent());
 					isActive = false;
 					micInput.enabled = false;
 				}
@@ -48,23 +47,40 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		}
 	}
 
-	private IEnumerator ToggleFireSprites(bool toggle)
+	/// <summary>
+	/// This triggers the fire extinguish animation on all fire gameobjects.
+	/// With a little delay this looks way better than all of them going out at the same time.
+	/// </summary>
+	/// <returns></returns>
+	private IEnumerator FireSpritesExtinguishEvent()
 	{
 		yield return new WaitForSeconds(3f);
-		if(toggle)
+		foreach(GameObject sprite in fireSprites)
+		{
+			sprite.GetComponent<Animator>().SetBool("Extinguished", false);
+			yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
+		}
+	}
+
+	/// <summary>
+	/// A simple function with which you can toggle all the fire gameobjects.
+	/// usefull for resetting the minigame.
+	/// </summary>
+	/// <param name="toggle"></param>
+	private void ToggleFireSprites(bool isActive)
+	{
+		if(isActive)
 		{
 			foreach(GameObject sprite in fireSprites)
 			{
-				sprite.GetComponent<Animator>().SetBool("Extinguished", false);
-				yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
+				sprite.SetActive(true);
 			}
 		}
 		else
 		{
 			foreach(GameObject sprite in fireSprites)
 			{
-				sprite.GetComponent<Animator>().SetBool("Extinguished", true);
-				yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
+				sprite.SetActive(false);
 			}
 		}
 	}

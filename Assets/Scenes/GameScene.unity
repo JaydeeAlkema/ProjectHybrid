@@ -1928,7 +1928,14 @@ MonoBehaviour:
   fireSpritesParent: {fileID: 1225244762}
   micInput: {fileID: 1121188862}
   micDB: 0
-  fireSprites: []
+  fireSprites:
+  - {fileID: 28118731}
+  - {fileID: 2016009694}
+  - {fileID: 1662977710}
+  - {fileID: 1703436045}
+  - {fileID: 815848301}
+  - {fileID: 1816095025}
+  - {fileID: 1962423651}
 --- !u!1 &1156050939
 GameObject:
   m_ObjectHideFlags: 0
