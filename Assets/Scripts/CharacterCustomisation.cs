@@ -26,6 +26,7 @@ public class CharacterCustomisation : MonoBehaviour
 
 	private void Start()
 	{
+		Application.targetFrameRate = 60;
 		SetupAssets();
 	}
 
