@@ -2,119 +2,148 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NPCStates
+{
+	Idle = 0,
+	Walking = 1,
+	Panicking = 2,
+	Angry = 3,
+	Happy = 4
+}
+
 public class NPCBehaviour : MonoBehaviour
 {
-	enum PetStates
-	{
-		Idle = 0,
-		Panicking = 1
-	}
-	enum IdleStates
-	{
-		StandingStill = 0,
-		MovingLeft = 1,
-		MovingRight = 2
-	}
+	[SerializeField] private Animator anim;
+	[Space]
+	[SerializeField] private Vector3 targetPos = default;
 	[SerializeField] private float maxBounds = 4f;
-	[SerializeField] private float petMaxSpeed = 2f;
-	[SerializeField] private float petMovementSpeed = 2f;
-	[SerializeField] private float petPanickMovementSpeed = 2f;
-	[SerializeField] private PetStates currentState = PetStates.Idle;
-	[SerializeField] private IdleStates idleState = IdleStates.StandingStill;
-	[SerializeField] private Vector2Int timeBetweenIdleActions = new Vector2Int(500, 1000);
-	[SerializeField] private int timer = 300;
+	[SerializeField] private float movementSpeed = 2f;
+	[SerializeField] private float panicMovementSpeed = 3f;
+	[Space]
+	[SerializeField] private NPCStates currentState = NPCStates.Idle;
+	[SerializeField] private Vector2Int timeBetweenActions = new Vector2Int(1, 3);
+	[Space]
+	[SerializeField] private string idleAnimation = "";
+	[SerializeField] private string walkAnimation = "";
+	[SerializeField] private string panicAnimation = "";
+	[SerializeField] private string angryAnimation = "";
+	[SerializeField] private string happyAnimation = "";
+	[Space]
 	[SerializeField] private bool inverseSpriteFlipX = true;
-	private Rigidbody2D rb2d;
 
 	void Start()
 	{
-		rb2d = GetComponent<Rigidbody2D>();
+		anim = GetComponentInChildren<Animator>();
+
+		SetState(NPCStates.Walking);
+		SetRandomTargetPosition();
+		StartCoroutine(HandleRandomMovement());
 	}
 
-	void Update()
+	private IEnumerator HandleRandomMovement()
 	{
-		if(currentState == PetStates.Idle)
+		while(true)
 		{
-			if(timer < 0)
-			{
-				timer = SetTimerToTimeBetweenActions(timeBetweenIdleActions);
-				ChangeToRandomIdleStateWithinBounds();
-			}
+			float finalMovementSpeed = (currentState == NPCStates.Walking) ? movementSpeed : panicMovementSpeed;
+			float step = finalMovementSpeed * Time.deltaTime;
+			Vector3 desiredPos = new Vector3(targetPos.x, transform.position.y, transform.position.z);
+			transform.position = Vector3.MoveTowards(transform.position, desiredPos, step);
 
-			if(idleState == IdleStates.MovingLeft)
+			if(currentState == NPCStates.Walking || currentState == NPCStates.Panicking)
 			{
-				if(rb2d.velocity.x < petMaxSpeed && rb2d.velocity.x > -petMaxSpeed)
+				Debug.Log(this.name + " is moving towards target position.");
+
+				// Flip the localscale accordingly.
+				if((targetPos.x - transform.position.x) > 0)
 				{
-					if(inverseSpriteFlipX) transform.localScale = new Vector3(1, 1, 1);
-					else transform.localScale = new Vector3(-1, 1, 1);
-					rb2d.AddForce(new Vector2(-petMovementSpeed, 0));
+					if(inverseSpriteFlipX) transform.localScale = new Vector3(-transform.localScale.y, transform.localScale.y, transform.localScale.z);
+					else transform.localScale = new Vector3(transform.localScale.y, transform.localScale.y, transform.localScale.z);
+				}
+				else
+				{
+					if(inverseSpriteFlipX) transform.localScale = new Vector3(transform.localScale.y, transform.localScale.y, transform.localScale.z);
+					else transform.localScale = new Vector3(-transform.localScale.y, transform.localScale.y, transform.localScale.z);
+				}
+
+				if(Vector3.Distance(transform.position, desiredPos) <= 0.1f)
+				{
+					SetState(NPCStates.Idle);
+					yield return new WaitForSeconds(SetTimerToTimeBetweenActions(timeBetweenActions));
+					SetRandomTargetPosition();
+					SetState(NPCStates.Walking);
 				}
 			}
-			if(idleState == IdleStates.MovingRight)
-			{
-				if(rb2d.velocity.x < petMaxSpeed && rb2d.velocity.x > -petMaxSpeed)
-				{
-					if(inverseSpriteFlipX) transform.localScale = new Vector3(-1, 1, 1);
-					else transform.localScale = new Vector3(1, 1, 1);
-					rb2d.AddForce(new Vector2(petMovementSpeed, 0));
-				}
-			}
+			yield return null;
 		}
-		if(currentState == PetStates.Panicking)
-		{
-			if(timer < 0)
-			{
-				timer = SetTimerToTimeBetweenActions(timeBetweenIdleActions);
-				ChangeToRandomIdleStateWithinBounds();
-			}
-
-			if(idleState == IdleStates.MovingLeft)
-			{
-
-				rb2d.AddForce(new Vector2(-petPanickMovementSpeed, 0));
-			}
-			if(idleState == IdleStates.MovingRight)
-			{
-
-				rb2d.AddForce(new Vector2(petPanickMovementSpeed, 0));
-			}
-		}
-
-
-		timer--;
 	}
-	public int SetTimerToTimeBetweenActions(Vector2Int timeBetween)
+
+	public float SetTimerToTimeBetweenActions(Vector2Int timeBetween)
 	{
-		return Random.Range(timeBetween.x, timeBetween.y);
+		float time = Random.Range(timeBetween.x, timeBetween.y);
+		Debug.Log(this.name + "Set time between actions: " + time);
+		return time;
 	}
 
-	public void ChangeToRandomIdleStateWithinBounds()
+	/// <summary>
+	/// This sets a random target where the NPC will be walking towards.
+	/// </summary>
+	public void SetRandomTargetPosition()
 	{
-		if(transform.position.x > maxBounds)
-		{
-			idleState = IdleStates.MovingLeft;
-			return;
-		}
-		if(transform.position.x < -maxBounds)
-		{
-			idleState = IdleStates.MovingRight;
-			return;
-		}
-
-		int random = Random.Range(0, 9);
-		if(random < 3)
-		{
-			idleState = IdleStates.StandingStill;
-		}
-		else if(random > 3 && random < 6)
-		{
-			idleState = IdleStates.MovingLeft;
-		}
-		else if(random > 6)
-		{
-			idleState = IdleStates.MovingRight;
-		}
-
+		Debug.Log("Acquiring new random target position");
+		targetPos = new Vector3(Random.Range(-maxBounds, maxBounds), 0, 0);
 	}
 
+	/// <summary>
+	/// Sets the targeted position.
+	/// </summary>
+	public void SetTargetPosition(Vector3 pos)
+	{
+		targetPos = pos;
+	}
+
+	public void SetState(NPCStates state)
+	{
+		this.currentState = state;
+
+		switch(currentState)
+		{
+			case NPCStates.Idle:
+				anim.SetBool(idleAnimation, true);
+				anim.SetBool(walkAnimation, false);
+				anim.SetBool(panicAnimation, false);
+				anim.SetBool(angryAnimation, false);
+				anim.SetBool(happyAnimation, false);
+				break;
+			case NPCStates.Walking:
+				anim.SetBool(idleAnimation, false);
+				anim.SetBool(walkAnimation, true);
+				anim.SetBool(panicAnimation, false);
+				anim.SetBool(angryAnimation, false);
+				anim.SetBool(happyAnimation, false);
+				break;
+			case NPCStates.Panicking:
+				anim.SetBool(idleAnimation, false);
+				anim.SetBool(walkAnimation, false);
+				anim.SetBool(panicAnimation, true);
+				anim.SetBool(angryAnimation, false);
+				anim.SetBool(happyAnimation, false);
+				break;
+			case NPCStates.Angry:
+				anim.SetBool(idleAnimation, false);
+				anim.SetBool(walkAnimation, false);
+				anim.SetBool(panicAnimation, false);
+				anim.SetBool(angryAnimation, true);
+				anim.SetBool(happyAnimation, false);
+				break;
+			case NPCStates.Happy:
+				anim.SetBool(idleAnimation, false);
+				anim.SetBool(walkAnimation, false);
+				anim.SetBool(panicAnimation, false);
+				anim.SetBool(angryAnimation, false);
+				anim.SetBool(happyAnimation, true);
+				break;
+			default:
+				break;
+		}
+	}
 }

@@ -9,13 +9,28 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 	[SerializeField] private float micDB = 0;
 
 	[SerializeField] private List<GameObject> fireSprites = new List<GameObject>();
+	[SerializeField] private List<NPCBehaviour> npcsInScene = new List<NPCBehaviour>();
 
 	private void Start()
 	{
 		micInput.enabled = false;
 
 		ToggleFireSprites(false);
+		GetNPCs();
 		StartCoroutine(InitMinigame());
+	}
+
+	/// <summary>
+	/// Gets all NPCs in the scene.
+	/// </summary>
+	private void GetNPCs()
+	{
+		NPCBehaviour[] npcs = FindObjectsOfType<NPCBehaviour>();
+
+		foreach(NPCBehaviour nPC in npcs)
+		{
+			npcsInScene.Add(nPC);
+		}
 	}
 
 	/// <summary>
@@ -28,6 +43,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		{
 			if(isActive)
 			{
+				TriggerPannickState(true);
 				if(micInput.enabled == false)
 				{
 					micInput.enabled = true;
@@ -60,6 +76,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 			sprite.GetComponent<Animator>().SetBool("Extinguished", false);
 			yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
 		}
+		TriggerPannickState(false);
 	}
 
 	/// <summary>
@@ -81,6 +98,28 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 			foreach(GameObject sprite in fireSprites)
 			{
 				sprite.SetActive(false);
+			}
+		}
+	}
+
+	/// <summary>
+	/// Triggers the pannick state on all the NPCs in the list.
+	/// </summary>
+	/// <param name="isActive"> is Pannick state active. </param>
+	private void TriggerPannickState(bool isActive)
+	{
+		if(isActive)
+		{
+			foreach(NPCBehaviour NPC in npcsInScene)
+			{
+				NPC.SetState(NPCStates.Panicking);
+			}
+		}
+		else
+		{
+			foreach(NPCBehaviour NPC in npcsInScene)
+			{
+				NPC.SetState(NPCStates.Idle);
 			}
 		}
 	}
