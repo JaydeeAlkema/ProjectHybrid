@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// The Character Customisation class handles all the customisables for the Character.
@@ -96,5 +97,10 @@ public class CharacterCustomisation : MonoBehaviour
 		if(legsVariantIndex < 0) legsVariantIndex = legsVariants.Count;
 
 		legsImage.sprite = legsVariants[legsVariantIndex];
+	}
+
+	public void LoadMainScene()
+	{
+		SceneManager.LoadScene(1);
 	}
 }
