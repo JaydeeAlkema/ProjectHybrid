@@ -485,6 +485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Female
       objectReference: {fileID: 0}
+    - target: {fileID: 2960181412548142987, guid: 3660c2db84709554cacc96f91466dbdc,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 37958dc35db207d46864f0d91e7fc1c2, type: 2}
     - target: {fileID: 2960181412598051557, guid: 3660c2db84709554cacc96f91466dbdc,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -3540,7 +3545,7 @@ MonoBehaviour:
   maxBounds: 3
   movementSpeed: 2
   panicMovementSpeed: 3
-  currentState: 0
+  currentState: 1
   timeBetweenActions: {x: 500, y: 1000}
   idleAnimation: 
   walkAnimation: 
