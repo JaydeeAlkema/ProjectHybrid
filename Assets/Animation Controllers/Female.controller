@@ -11,19 +11,19 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4204625437699747322}
-    m_Position: {x: 350, y: 180, z: 0}
+    m_Position: {x: 310, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6332654719191512540}
-    m_Position: {x: 460, y: 260, z: 0}
+    m_Position: {x: 420, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4846851215998188225}
-    m_Position: {x: 460, y: 100, z: 0}
+    m_Position: {x: 420, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4761394055869251537}
-    m_Position: {x: 240, y: 100, z: 0}
+    m_Position: {x: 200, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6487014669316665932}
-    m_Position: {x: 240, y: 260, z: 0}
+    m_Position: {x: 200, y: 260, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -353,7 +353,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Character_Walking
-  m_Speed: 0.75
+  m_Speed: 0.65
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 6824551917309626906}
