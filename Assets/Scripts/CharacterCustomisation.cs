@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// The Character Customisation class handles all the customisables for the Character.
@@ -12,19 +13,20 @@ public class CharacterCustomisation : MonoBehaviour
 	#region List of Art Assets
 	[SerializeField] private List<Sprite> headVariants = new List<Sprite>();
 	[SerializeField] private List<Sprite> bodyVariants = new List<Sprite>();
-	[SerializeField] private List<Sprite> clothesVariants = new List<Sprite>();
+	[SerializeField] private List<Sprite> legsVariants = new List<Sprite>();
 	[Space]
 	[SerializeField] private Image headImage = default;
 	[SerializeField] private Image bodyImage = default;
-	[SerializeField] private Image ClothesImage = default;
+	[SerializeField] private Image legsImage = default;
 	[Space]
 	[SerializeField] private int headVariantIndex = 0;
 	[SerializeField] private int bodyVariantIndex = 0;
-	[SerializeField] private int clothesVariantIndex = 0;
+	[SerializeField] private int legsVariantIndex = 0;
 	#endregion
 
 	private void Start()
 	{
+		Application.targetFrameRate = 60;
 		SetupAssets();
 	}
 
@@ -32,7 +34,7 @@ public class CharacterCustomisation : MonoBehaviour
 	{
 		headImage.sprite = headVariants[headVariantIndex];
 		bodyImage.sprite = bodyVariants[bodyVariantIndex];
-		ClothesImage.sprite = clothesVariants[clothesVariantIndex];
+		legsImage.sprite = legsVariants[legsVariantIndex];
 	}
 
 	/// <summary>
@@ -41,7 +43,7 @@ public class CharacterCustomisation : MonoBehaviour
 	public void NextHeadVariant()
 	{
 		headVariantIndex++;
-		if(headVariantIndex > headVariants.Count) headVariantIndex = 0;
+		if(headVariantIndex > headVariants.Count - 1) headVariantIndex = 0;
 
 		headImage.sprite = headVariants[headVariantIndex];
 	}
@@ -62,7 +64,7 @@ public class CharacterCustomisation : MonoBehaviour
 	public void NextBodyVariant()
 	{
 		bodyVariantIndex++;
-		if(bodyVariantIndex > bodyVariants.Count) bodyVariantIndex = 0;
+		if(bodyVariantIndex > bodyVariants.Count - 1) bodyVariantIndex = 0;
 
 		bodyImage.sprite = bodyVariants[bodyVariantIndex];
 	}
@@ -78,23 +80,28 @@ public class CharacterCustomisation : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Cycles to the next Clothes variant in the list.
+	/// Cycles to the next Legs variant in the list.
 	/// </summary>
-	public void NextClothesVariant()
+	public void NextLegsVariant()
 	{
-		clothesVariantIndex++;
-		if(clothesVariantIndex > clothesVariants.Count) clothesVariantIndex = 0;
+		legsVariantIndex++;
+		if(legsVariantIndex > legsVariants.Count - 1) legsVariantIndex = 0;
 
-		ClothesImage.sprite = clothesVariants[clothesVariantIndex];
+		legsImage.sprite = legsVariants[legsVariantIndex];
 	}
 	/// <summary>
-	/// Cycles to the previous Clothes variant in the list.
+	/// Cycles to the previous Legs variant in the list.
 	/// </summary>
-	public void PreviousClothesVariant()
+	public void PreviousLegsVariant()
 	{
-		clothesVariantIndex--;
-		if(clothesVariantIndex < 0) clothesVariantIndex = clothesVariants.Count;
+		legsVariantIndex--;
+		if(legsVariantIndex < 0) legsVariantIndex = legsVariants.Count;
 
-		ClothesImage.sprite = clothesVariants[clothesVariantIndex];
+		legsImage.sprite = legsVariants[legsVariantIndex];
+	}
+
+	public void LoadMainScene()
+	{
+		SceneManager.LoadScene(1);
 	}
 }
