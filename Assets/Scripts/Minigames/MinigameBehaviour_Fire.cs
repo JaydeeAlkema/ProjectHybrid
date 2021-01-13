@@ -43,6 +43,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		{
 			if(isActive)
 			{
+				ToggleFireSprites(true);
 				TriggerPannickState(true);
 				if(micInput.enabled == false)
 				{
@@ -73,7 +74,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		yield return new WaitForSeconds(3f);
 		foreach(GameObject sprite in fireSprites)
 		{
-			sprite.GetComponent<Animator>().SetBool("Extinguished", false);
+			sprite.GetComponent<Animator>().SetBool("Extinguished", true);
 			yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
 		}
 		TriggerPannickState(false);
@@ -91,6 +92,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 			foreach(GameObject sprite in fireSprites)
 			{
 				sprite.SetActive(true);
+				sprite.GetComponent<Animator>().SetBool("Extinguished", false);
 			}
 		}
 		else
@@ -119,7 +121,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		{
 			foreach(NPCBehaviour NPC in npcsInScene)
 			{
-				NPC.SetState(NPCStates.Idle);
+				NPC.SetState(NPCStates.Walking);
 			}
 		}
 	}

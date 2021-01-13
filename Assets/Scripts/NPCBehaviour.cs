@@ -67,10 +67,18 @@ public class NPCBehaviour : MonoBehaviour
 
 				if(Vector3.Distance(transform.position, desiredPos) <= 0.1f)
 				{
-					SetState(NPCStates.Idle);
-					yield return new WaitForSeconds(SetTimerToTimeBetweenActions(timeBetweenActions));
-					SetRandomTargetPosition();
-					SetState(NPCStates.Walking);
+					if(currentState == NPCStates.Panicking)
+					{
+						SetRandomTargetPosition();
+						yield return null;
+					}
+					else
+					{
+						SetState(NPCStates.Idle);
+						yield return new WaitForSeconds(SetTimerToTimeBetweenActions(timeBetweenActions));
+						SetRandomTargetPosition();
+						SetState(NPCStates.Walking);
+					}
 				}
 			}
 			yield return null;
