@@ -11,10 +11,13 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 	[SerializeField] private List<GameObject> fireSprites = new List<GameObject>();
 	[SerializeField] private List<NPCBehaviour> npcsInScene = new List<NPCBehaviour>();
 
+	[SerializeField] private GameObject UIWarningPopup = default;
+
 	private void Start()
 	{
 		micInput.enabled = false;
 
+		UIWarningPopup.SetActive(false);
 		ToggleFireSprites(false);
 		GetNPCs();
 		StartCoroutine(InitMinigame());
@@ -43,6 +46,8 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		{
 			if(isActive)
 			{
+				UIWarningPopup.GetComponent<Animator>().SetBool("Exit", false);
+				UIWarningPopup.SetActive(true);
 				ToggleFireSprites(true);
 				TriggerPannickState(true);
 				if(micInput.enabled == false)
@@ -78,6 +83,9 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 			yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
 		}
 		TriggerPannickState(false);
+		UIWarningPopup.GetComponent<Animator>().SetBool("Exit", true);
+		yield return new WaitForSeconds(1f);
+		UIWarningPopup.SetActive(false);
 	}
 
 	/// <summary>

@@ -134,7 +134,7 @@ public class NPCBehaviour : MonoBehaviour
 				anim.SetBool(walkAnimation, false);
 				anim.SetBool(panicAnimation, true);
 				anim.SetBool(angryAnimation, false);
-				anim.SetBool(happyAnimation, false);
+				anim.SetBool(happyAnimation, false); 
 				break;
 			case NPCStates.Angry:
 				anim.SetBool(idleAnimation, false);
