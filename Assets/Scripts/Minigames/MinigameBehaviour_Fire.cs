@@ -85,6 +85,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 			yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
 		}
 		TriggerPannickState(false);
+		ToggleFireSprites(false);
 		UIWarningPopup.GetComponent<Animator>().SetBool("Exit", true);
 		yield return new WaitForSeconds(1f);
 		UIWarningPopup.SetActive(false);
