@@ -13,7 +13,9 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 
 	[SerializeField] private GameObject UIWarningPopup = default;
 
-	private void Start()
+    public bool IsActive { get => isActive; set => isActive = value; }
+
+    private void Start()
 	{
 		micInput.enabled = false;
 

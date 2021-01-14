@@ -3852,6 +3852,7 @@ GameObject:
   - component: {fileID: 1259581952}
   - component: {fileID: 1259581951}
   - component: {fileID: 1259581950}
+  - component: {fileID: 1259581954}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3947,6 +3948,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1259581954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259581949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f2ce8eb0b773447893996a0ca7b10b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerbar: {fileID: 1156050941}
+  thirstBar: {fileID: 1977509038}
+  energyBar: {fileID: 1266422464}
+  hygieneBar: {fileID: 622341072}
+  vitals: {fileID: 1916364314}
 --- !u!1 &1264736922
 GameObject:
   m_ObjectHideFlags: 0
@@ -5140,6 +5158,7 @@ GameObject:
   - component: {fileID: 1916364316}
   - component: {fileID: 1916364317}
   - component: {fileID: 1916364318}
+  - component: {fileID: 1916364314}
   m_Layer: 0
   m_Name: Pet
   m_TagString: Untagged
@@ -5147,6 +5166,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1916364314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916364313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ffe149fb8bad14e857fc01a17bdc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunger: 100
+  thirst: 100
+  energy: 100
+  hygiene: 100
+  hungerDecayAmount: 2
+  thirstDecayAmount: 2
+  energyDecayAmount: 5
+  hygieneDecayAmount: 2
+  fireEvent: {fileID: 1121188863}
 --- !u!4 &1916364316
 Transform:
   m_ObjectHideFlags: 0
