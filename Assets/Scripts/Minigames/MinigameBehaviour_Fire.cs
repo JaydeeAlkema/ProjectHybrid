@@ -58,7 +58,7 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 
 				micDB = MicInput.MicLoudnessinDecibels;
 
-				if(micDB > -30f)
+				if(micDB > -10f)
 				{
 					StartCoroutine(FireSpritesExtinguishEvent());
 					isActive = false;
@@ -86,6 +86,23 @@ public class MinigameBehaviour_Fire : MonoBehaviour
 		UIWarningPopup.GetComponent<Animator>().SetBool("Exit", true);
 		yield return new WaitForSeconds(1f);
 		UIWarningPopup.SetActive(false);
+		StartCoroutine(TriggerNPCHappyState());
+	}
+
+	private IEnumerator TriggerNPCHappyState()
+	{
+		foreach(NPCBehaviour NPC in npcsInScene)
+		{
+			NPC.SetState(NPCStates.Happy);
+		}
+
+		yield return new WaitForSeconds(3f);
+
+		foreach(NPCBehaviour NPC in npcsInScene)
+		{
+			NPC.SetState(NPCStates.Walking);
+		}
+		yield return null;
 	}
 
 	/// <summary>

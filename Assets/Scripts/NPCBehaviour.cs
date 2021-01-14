@@ -31,6 +31,10 @@ public class NPCBehaviour : MonoBehaviour
 	[Space]
 	[SerializeField] private bool inverseSpriteFlipX = true;
 
+	private float finalMovementSpeed;
+	private float step;
+	private Vector3 desiredPos;
+
 	void Start()
 	{
 		anim = GetComponentInChildren<Animator>();
@@ -44,10 +48,13 @@ public class NPCBehaviour : MonoBehaviour
 	{
 		while(true)
 		{
-			float finalMovementSpeed = (currentState == NPCStates.Walking) ? movementSpeed : panicMovementSpeed;
-			float step = finalMovementSpeed * Time.deltaTime;
-			Vector3 desiredPos = new Vector3(targetPos.x, transform.position.y, transform.position.z);
-			transform.position = Vector3.MoveTowards(transform.position, desiredPos, step);
+			if(currentState != NPCStates.Happy || currentState != NPCStates.Angry)
+			{
+				finalMovementSpeed = (currentState == NPCStates.Walking) ? movementSpeed : panicMovementSpeed;
+				step = finalMovementSpeed * Time.deltaTime;
+				desiredPos = new Vector3(targetPos.x, transform.position.y, transform.position.z);
+				transform.position = Vector3.MoveTowards(transform.position, desiredPos, step);
+			}
 
 			if(currentState == NPCStates.Walking || currentState == NPCStates.Panicking)
 			{
@@ -72,7 +79,7 @@ public class NPCBehaviour : MonoBehaviour
 						SetRandomTargetPosition();
 						yield return null;
 					}
-					else
+					else if(currentState != NPCStates.Angry || currentState != NPCStates.Happy)
 					{
 						SetState(NPCStates.Idle);
 						yield return new WaitForSeconds(SetTimerToTimeBetweenActions(timeBetweenActions));
@@ -134,7 +141,7 @@ public class NPCBehaviour : MonoBehaviour
 				anim.SetBool(walkAnimation, false);
 				anim.SetBool(panicAnimation, true);
 				anim.SetBool(angryAnimation, false);
-				anim.SetBool(happyAnimation, false); 
+				anim.SetBool(happyAnimation, false);
 				break;
 			case NPCStates.Angry:
 				anim.SetBool(idleAnimation, false);
