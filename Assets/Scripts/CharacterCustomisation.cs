@@ -53,7 +53,7 @@ public class CharacterCustomisation : MonoBehaviour
 	public void PreviousHeadVariant()
 	{
 		headVariantIndex--;
-		if(headVariantIndex < 0) headVariantIndex = headVariants.Count;
+		if(headVariantIndex < 0) headVariantIndex = headVariants.Count - 1;
 
 		headImage.sprite = headVariants[headVariantIndex];
 	}
@@ -74,7 +74,7 @@ public class CharacterCustomisation : MonoBehaviour
 	public void PreviousBodyVariant()
 	{
 		bodyVariantIndex--;
-		if(bodyVariantIndex < 0) bodyVariantIndex = bodyVariants.Count;
+		if(bodyVariantIndex < 0) bodyVariantIndex = bodyVariants.Count - 1;
 
 		bodyImage.sprite = bodyVariants[bodyVariantIndex];
 	}
@@ -95,7 +95,7 @@ public class CharacterCustomisation : MonoBehaviour
 	public void PreviousLegsVariant()
 	{
 		legsVariantIndex--;
-		if(legsVariantIndex < 0) legsVariantIndex = legsVariants.Count;
+		if(legsVariantIndex < 0) legsVariantIndex = legsVariants.Count - 1;
 
 		legsImage.sprite = legsVariants[legsVariantIndex];
 	}
