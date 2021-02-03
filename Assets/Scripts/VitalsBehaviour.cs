@@ -21,21 +21,10 @@ public class VitalsBehaviour : MonoBehaviour
 	[SerializeField]
 	private float hygieneDecayAmount = 5;
 
-	[SerializeField]
-	private MinigameBehaviour_Fire fireEvent;
-
 	public float Hunger { get => hunger; set => hunger = value; }
 	public float Thirst { get => thirst; set => thirst = value; }
 	public float Energy { get => energy; set => energy = value; }
 	public float Hygiene { get => hygiene; set => hygiene = value; }
-
-	void Start()
-	{
-		if(!fireEvent)
-		{
-			Debug.LogError("Assign the fire event to the Vitals Behaviour script!!!!");
-		}
-	}
 
 	void Update()
 	{
@@ -56,20 +45,13 @@ public class VitalsBehaviour : MonoBehaviour
 		}
 		if(Random.Range(1, 100) < energyDecayAmount && energy > 0)
 		{
-			if(energy < 15)
-			{
-				fireEvent.IsActive = true;
-				energy = 100;
-
-				NotificationsManager.SendNotification("1", "Pet Energy Low!", "Your pet has run very low on energy!", System.DateTime.Now.AddMinutes(1), default, default);
-			}
+			if(energy < 15) NotificationsManager.SendNotification("1", "Pet Energy Low!", "Your pet has run very low on energy!", System.DateTime.Now.AddMinutes(1), default, default);
 			energy--;
 		}
 		if(Random.Range(1, 100) < hygieneDecayAmount && hygiene > 0)
 		{
 			hygiene--;
 			if(thirst < 25) NotificationsManager.SendNotification("1", "Pet Hygiene Low!", "Your pet is very filthy! Give him a wash or suffer the consequences!", System.DateTime.Now.AddMinutes(1), default, default);
-
 		}
 	}
 }
