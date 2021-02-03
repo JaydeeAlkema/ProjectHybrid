@@ -46,7 +46,7 @@ public class Routine : MonoBehaviour
 
 	public void AddroutineToManager()
 	{
-		routineManager.AddRoutineToList(this);
+		routineManager.EnableRoutinePreview();
 		CloseRoutineWindow();
 	}
 

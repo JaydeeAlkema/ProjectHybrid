@@ -5,16 +5,15 @@ using UnityEngine;
 public class RoutineManager : MonoBehaviour
 {
 	[SerializeField] private GameObject routinePrefab = default;
-	[SerializeField] private GameObject activeRoutinesList = default;
-	[SerializeField] private List<Routine> activeRoutines = default;
+	[SerializeField] private GameObject routinePreview = default;
 
-	public void AddRoutineToList(Routine routine)
+	private void Awake()
 	{
-		activeRoutines.Add(routine);
+		//routinePreview.SetActive(false);
 	}
 
-	public void RemoveRoutineFromList(Routine routine)
+	public void EnableRoutinePreview()
 	{
-		activeRoutines.Remove(routine);
+		routinePreview.SetActive(true);
 	}
 }
