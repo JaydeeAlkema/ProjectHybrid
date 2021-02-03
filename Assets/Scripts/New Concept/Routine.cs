@@ -19,6 +19,11 @@ public class Routine : MonoBehaviour
 	[Header("Components")]
 	[SerializeField] private TextMeshProUGUI nameText = default;
 	[SerializeField] private TextMeshProUGUI descriptionText = default;
+	[Space]
+	[SerializeField] private TextMeshProUGUI dateDayText = default;
+	[SerializeField] private TextMeshProUGUI dateDayMonth = default;
+	[SerializeField] private TextMeshProUGUI dateDayMinute = default;
+	[SerializeField] private TextMeshProUGUI dateDayHour = default;
 
 	[Header("Date Data")]
 	[SerializeField] private DateRepeatType dateRepeat = DateRepeatType.Never;
