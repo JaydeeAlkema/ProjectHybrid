@@ -9,7 +9,7 @@ public class RoutineManager : MonoBehaviour
 
 	private void Awake()
 	{
-		//routinePreview.SetActive(false);
+		routinePreview.SetActive(false);
 	}
 
 	public void EnableRoutinePreview()
