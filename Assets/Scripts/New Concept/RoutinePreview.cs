@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RoutinePreview : MonoBehaviour
 {
 	[SerializeField] private Image progressBar;
+	[SerializeField] private PetHappiness petHappiness;
 	float value = 1;
 
 	private void Update()
@@ -17,5 +18,11 @@ public class RoutinePreview : MonoBehaviour
 	{
 		value -= Time.deltaTime / 50f;
 		progressBar.fillAmount = value;
+	}
+
+	public void ApplyHappiness()
+	{
+		petHappiness.Value += 25f;
+		gameObject.SetActive(false);
 	}
 }

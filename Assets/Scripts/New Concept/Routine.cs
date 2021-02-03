@@ -42,23 +42,18 @@ public class Routine : MonoBehaviour
 	private void Start()
 	{
 		routineManager = FindObjectOfType<RoutineManager>();
-		this.gameObject.SetActive(false);
+		ToggleRoutineWindow();
 	}
 
 	public void AddroutineToManager()
 	{
 		routineManager.EnableRoutinePreview();
-		CloseRoutineWindow();
-	}
-
-	public void CloseRoutineWindow()
-	{
-		Destroy(this.gameObject);
+		ToggleRoutineWindow();
 	}
 
 	public void ToggleRoutineWindow()
 	{
-		this.gameObject.SetActive(true);
+		gameObject.SetActive(!gameObject.activeInHierarchy);
 	}
 
 	/// <summary>
