@@ -17,13 +17,13 @@ public enum DateRepeatType
 public class Routine : MonoBehaviour
 {
 	[Header("Components")]
-	[SerializeField] private TextMeshProUGUI nameText = default;
-	[SerializeField] private TextMeshProUGUI descriptionText = default;
+	[SerializeField] private TMP_InputField nameText = default;
+	[SerializeField] private TMP_InputField descriptionText = default;
 	[Space]
-	[SerializeField] private TextMeshProUGUI dateDayText = default;
-	[SerializeField] private TextMeshProUGUI dateDayMonth = default;
-	[SerializeField] private TextMeshProUGUI dateDayMinute = default;
-	[SerializeField] private TextMeshProUGUI dateDayHour = default;
+	[SerializeField] private TMP_InputField dateDayText = default;
+	[SerializeField] private TMP_InputField dateDayMonth = default;
+	[SerializeField] private TMP_InputField dateDayMinute = default;
+	[SerializeField] private TMP_InputField dateDayHour = default;
 
 	[Header("Date Data")]
 	[SerializeField] private DateRepeatType dateRepeat = DateRepeatType.Never;
@@ -36,11 +36,22 @@ public class Routine : MonoBehaviour
 	public string Description { get => description; set => description = value; }
 	public RoutineDate RoutineDate { get => routineDate; set => routineDate = value; }
 
+	private RoutineManager routineManager;
+
 	private void Start()
 	{
-		transform.name = "Routine: " + name;
+		routineManager = FindObjectOfType<RoutineManager>();
+	}
 
-		GetTimeUntillRoutineDate();
+	public void AddroutineToManager()
+	{
+		routineManager.AddRoutineToList(this);
+		CloseRoutineWindow();
+	}
+
+	public void CloseRoutineWindow()
+	{
+		Destroy(this.gameObject);
 	}
 
 	/// <summary>
